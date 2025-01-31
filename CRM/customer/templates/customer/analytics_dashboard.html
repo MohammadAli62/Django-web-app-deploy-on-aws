@@ -1,0 +1,69 @@
+{% extends "customer/base.html" %}
+{% load static %}
+
+{% block title %}Dashboard Analytics{% endblock %}
+
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row">  
+        <div class="col-sm-8 offset-2 mt-3">              
+            
+            <h3>Customer Analytics Dashboard</h3>
+
+
+            {% if message %}
+
+                <div class="alert alert-info mt-3">
+                    <small><h5>{{message}}</h5></small>
+                </div>  
+
+            {% else %}
+
+                <br>
+                <br>
+                <div>
+                    <h5>Customer Segmentation Distribution</h5>
+                    <img src="data:image/png;base64,{{ pie_chart }}" alt="Pie Chart">
+                </div>
+                <br>
+                <br>
+                <h5>Customers & Groups</h5>
+                <div>
+                    {{ graph_html|safe }}
+                </div>
+                <br>
+                <br>
+                <div>
+                    <h5>Recency Distribution by Customer Group</h5>
+                    <img src="data:image/png;base64,{{ recency_plot }}" alt="Recency Plot">
+                
+                </div>
+                <br>
+                <br>
+                <div>
+                    <h5>Frequency Distribution by Customer Group</h5>
+                    <img src="data:image/png;base64,{{ frequency_plot }}" alt="Frequency Plot">
+                </div>
+                <br>
+                <br>
+                <div>
+                    <h5>Monetary Distribution by Customer Group</h5>
+                    <img src="data:image/png;base64,{{ monetary_plot }}" alt="Monetary Plot">
+                </div>
+                <br>
+                <br>
+                <br>
+
+
+            {% endif %}
+
+
+        </div>
+    </div>
+</div>
+    
+
+{% endblock %}

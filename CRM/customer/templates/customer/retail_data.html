@@ -1,0 +1,140 @@
+{% extends "customer/base.html" %}
+
+
+{% block title %}{{title}}{% endblock %}
+
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row">  
+        <div class="col-sm-8 offset-2 mt-3">              
+            
+            {% if selection_value == 2 %}
+
+                <h3>{{file_name}}</h3>
+
+                <br>
+                <hr>
+                
+                <h3>Average Customers DataFrame</h3>
+                <div class="table-responsive">
+                    {{ df_average|safe }}
+                </div>
+                <br>
+                <h3>Whales Customers DataFrame</h3>
+                <div class="table-responsive">
+                    {{ df_whales|safe }}
+                </div>
+
+            {% elif selection_value == 3 %}
+
+                <h3>{{file_name}}</h3>
+
+                <br>
+                <hr>
+
+                <h3>Lapsed Customers DataFrame</h3>
+                <div class="table-responsive">
+                {{ df_lapsed|safe }}
+                </div>
+                <br>
+                <h3>Average Customers DataFrame</h3>
+                <div class="table-responsive">
+                {{ df_average|safe }}
+                </div>
+                <br>
+                <h3>Whales Customers DataFrame</h3>
+                <div class="table-responsive">
+                {{ df_whales|safe }}
+                </div>
+
+            {% elif selection_value == 4 or selection_value == 0 %}
+
+                <h3>{{file_name}}</h3>
+
+                <br>
+                <hr>
+
+                <h3>Lapsed Customers DataFrame</h3>
+                <div class="table-responsive">
+                    {{ df_lapsed|safe }}
+                </div>
+
+                <br>
+
+                <h3>Average Customers DataFrame</h3>
+                <div class="table-responsive">
+                    {{ df_average|safe }}
+                </div>
+
+                <br>
+                
+                <h3>Shark Customers DataFrame</h3>
+                <div class="table-responsive">
+                    {{ df_shark|safe }}
+                </div>
+
+                <br>
+
+                <h3>Whales Customers DataFrame</h3>
+                <div class="table-responsive">
+                    {{ df_whales|safe }}
+                </div>
+
+            {% else %}
+
+                {% if message %}
+                    <div class="alert alert-info mt-3">
+                    <small><h6>{{message}}</h6></small>
+                    </div>  
+                {% endif %}
+
+                <div class="btn btn-warning mt-3">
+                    <p>
+                        <B>Dataset</B> must contain these column in similar <b>CASE LETTERS</b> or <B>SPELLING</B> otherwise system will raise <b>error</b>,
+                        names of column are: <b>CustomerID, Quantity, UnitPrice, InvoiceNo, InvoiceDate</b> data types of these columns must be in <b>numeric, numeric,
+                        float, object(string), date-time </b> respectively.
+                    </p>
+                </div>
+
+                <section class="container mt-3">
+                    <h3>Upload Dataset</h3>
+                    <form  aciton="retail_data" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="dataset" class="form-label">Choose CSV file:</label>
+                            <input type="file" class="form-control" id="dataset" name="dataset" accept=".csv" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Upload</button>
+                    </form>
+                </section> 
+
+                <br>
+                <br>
+
+
+                {% if title == "Uploaded Dataset" or title == "Retail Dataset" %}
+                    <h3>{{title}}</h3>
+                    <h6>{{uploaded_file_name}}</h6>
+                    <div class="table-responsive">
+                    {{ df|safe }}
+                    </div>
+                {% endif %}
+
+                <br>
+                <br>
+
+            {% endif %}
+
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+          

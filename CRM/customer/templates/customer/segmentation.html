@@ -1,0 +1,69 @@
+{% extends "customer/base.html" %}
+
+
+{% block title %}Segments{% endblock %}
+
+{% block content %}
+
+<div class="container">
+        <div class="row">  
+            <div class="col-sm-8 offset-2 mt-3">              
+                {% if message %}
+                        <div class="alert alert-info mt-3">
+                        <small><h6>{{message}}</h6></small>
+                        </div>  
+                {% endif %}
+
+                <h3>Customize Your Segments For</h3>
+                <h5>Recency Frequency & Monetary Analysis </h5>
+                <br>
+
+                <div class="btn btn-info">
+                <p>Dataset Name: {{uploaded_file_name}}</p>
+                <p>The total rows present in data set: {{no_of_rows_in_data_set}}</p>
+                <p>Unique number of customers are: {{no_of_customers}} </p>
+                <p>Last purchased date in data set: {{max_date_original}} </p>
+                <p><small>( To get best of RFM analysis, set maximum date accordingly 1/2 months higher to above last date of purchased )</small></p>
+                <p><small>( By default date time set to 2024/1/10 12:00 PM and customer categories are to 2 )</small></p>
+                </div>
+                <br>
+                <br>
+                <form action="segmentation" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                                <label for="datetime">Date and Time:</label>
+                                <input type="datetime-local" class="form-control" id="datetime" name="datetime" value={{ max_date }}>
+                        </div>
+                        <div class="form-group">
+                                <label for="selection">Customer Segments:</label>
+                                <select class="form-control" id="selection" name="selection">
+                                <option value="2" {% if selection_value == 2 %}selected{% endif %}>2</option>
+                                <option value="3" {% if selection_value == 3 %}selected{% endif %}>3</option>
+                                <option value="4" {% if selection_value == 4 %}selected{% endif %}>4</option>
+                                </select>
+                        </div>
+                        <div class="form-group">
+                                <label for="customer_to_show">Show Number of Customer On Output:</label>
+                                <input type="number" class="form-control" min=10 max=800 name="customer_to_show" value={{ customer_to_show }}>
+                        </div>
+
+                        <br>
+                        <button type="submit" style="width: 5rem" class="btn btn-info">Set</button>
+                </form>
+                <br>
+                <br>
+                <form method="post" action="analysis" class="text-center">
+                {% csrf_token %}
+                <button type="submit" style="width: 5rem" class="btn btn-info">Analyze</button>
+                </form>
+                <br>
+                <br>
+           </div>
+      </div>
+</div>
+        
+{% endblock %}
+
+
+
+
